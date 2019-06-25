@@ -1,62 +1,63 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import jsPDF from 'jspdf';
 
 function App() {
-  const users = [
+  const todos = [
     {
-      id: '00001',
-      type: "VIP",
-      bill: '0',  
-      patient_name: "Alim Tegar",
-      doctor_name: "John Doe",
-      room_name: "Kamar Perawatan",
-      created_at: '01/07/2000 00:00:00'
+      id: 1,
+      title: "delectus aut autem",
+      completed: false
     },
     {
-      id: '00003',
-      type: "VVIP",
-      bill: '10.000',  
-      patient_name: "Alim Tegar",
-      doctor_name: "John Doe",
-      room_name: "Kamar Perawatan",
-      created_at: '01/07/2000 00:00:00'
+      id: 2,
+      title: "quis ut nam facilis",
+      completed: false
     },
     {
-      id: '00004',
-      type: "VVIP",
-      bill: '1.000.000.000',  
-      patient_name: "Abdul Aziz Wicaksono",
-      doctor_name: "John Doe",
-      room_name: "Kamar Perawatan",
-      created_at: '01/07/2000 00:00:00'
+      id: 3,
+      title: "fugiat veniam minus",
+      completed: false
     },
     {
-      id: '00005',
-      type: "VVIP",
-      bill: '0',  
-      patient_name: "Samiyem",
-      doctor_name: "John Doe",
-      room_name: "Kamar Perawatan",
-      created_at: '01/07/2000 00:00:00'
-    }
-    ];
+      id: 4,
+      title: "et porro tempora",
+      completed: true
+    },
+    {
+      id: 5,
+      title: "laboriosam mollitia et",
+      completed: false
+    },
+    {
+      id: 6,
+      title: "qui ullam ratione",
+      completed: false
+    },
+    {
+      id: 7,
+      title: "illo expedita consequatur",
+      completed: false
+    },
+    {
+      id: 8,
+      title: "quo adipisci enim quam ut ab",
+      completed: true
+    },
+    {
+      id: 9,
+      title: "molestiae perspiciatis",
+      completed: false
+    },
+    {
+      id: 10,
+      title: "illo est ratione",
+      completed: true
+    },
+  ];
 
-  const getCellWidth = (property) => {
-    switch (property) {
-      case 'id': 
-        return 14;
-      case 'type': 
-        return 19;
-      case 'bill': 
-        return 29;
-      default:
-        return 32;
-    }
-  };
-
-  useEffect(() => {
-    console.log(Object.keys(users[0]));
-  }, []);
+  const x = 10;
+  const y = 10;
+  let width = 48;
 
   const downloadPdf = () => {
     let doc  = new jsPDF({
@@ -69,23 +70,24 @@ function App() {
       printHeaders: true
     });
 
-    Object.keys(users[0]).map((property) => {
+    Object.keys(todos[0]).map((property) => {
       doc.setFontType('bold');
 
-      const width = getCellWidth(property);
+      doc.cell(x, y, width, 8, property, 1);
 
-      doc.cell(10, 10, width, 8, property, 1);
+      return false;
     });
 
-    users.map((user, key) => {
-      Object.keys(user).map((property) => {
+    todos.map((todo, key) => {
+      Object.keys(todo).map((property) => {
         doc.setFontType('normal');
 
-        const text = user[property].toString();
-        const width = getCellWidth(property);
+        doc.cell(x, y, width, 8, todo[property].toString(), key + 2);
 
-        doc.cell(10, 10, width, 8, text, key + 2);
-      })
+        return false;
+      });
+
+      return false;
     });
     
 
@@ -95,7 +97,7 @@ function App() {
   return (
     <div className="App">
       <button onClick={() => downloadPdf()}>
-        Download PDF
+        Generate todos.pdf
       </button>
     </div>
   );
