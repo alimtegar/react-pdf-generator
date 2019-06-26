@@ -97,7 +97,7 @@ function App() {
   return (
     <div className="App">
       <button onClick={() => downloadPdf()}>
-        Generate todos.pdf
+        Download todos.pdf
       </button>
     </div>
   );
